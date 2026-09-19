@@ -11,21 +11,21 @@
   --color-surface-container: #2b1c16;
   --color-surface-container-high: #362720;
   --color-surface-container-highest: #41312a;
-  
+
   --color-on-surface: #f8ddd2;
   --color-on-surface-variant: #e2bfb0;
   --color-inverse-surface: #f8ddd2;
   --color-inverse-on-surface: #3d2d26;
-  
+
   --color-outline: #a98a7d;
   --color-outline-variant: #5a4136;
-  
+
   --color-primary: #ffb693;
   --color-on-primary: #561f00;
   --color-primary-container: #ff6b00;
   --color-on-primary-container: #572000;
   --color-inverse-primary: #a04100;
-  
+
   --color-error: #ffb4ab;
   --color-on-error: #690005;
   --color-error-container: #93000a;
@@ -63,5 +63,74 @@
 @layer base {
   body {
     @apply bg-background text-on-surface font-sans antialiased min-h-screen;
+  }
+
+  @layer utilities {
+    .card-bg {
+      background-color: #1A1A1D;
+      /* Level 1 Background */
+    }
+
+    .hover-glow:hover {
+      box-shadow: 0 0 20px rgba(255, 107, 0, 0.4);
+    }
+
+    .btn-gradient {
+      background: linear-gradient(to right, #FF6B00, #FF7A1A);
+    }
+
+    /* Ocultar barra de rolagem para listas horizontais (Pills) */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    .bg-level-1 {
+      background-color: #1A1A1D;
+    }
+
+    .bg-level-2 {
+      background-color: #202023;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #FF6B00 0%, #FF7A1A 100%);
+      color: white;
+      border: none;
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary:hover {
+      box-shadow: 0 0 20px rgba(255, 107, 0, 0.4);
+      transform: translateY(-1px);
+    }
+
+    .glass-panel {
+      background: rgba(26, 26, 29, 0.95);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-left: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .empty-cart-glow {
+      position: relative;
+    }
+
+    .empty-cart-glow::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 150px;
+      height: 150px;
+      background: radial-gradient(circle, rgba(255, 107, 0, 0.15) 0%, rgba(255, 107, 0, 0) 70%);
+      z-index: -1;
+      border-radius: 50%;
+    }
   }
 }
