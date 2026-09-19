@@ -8,7 +8,7 @@ import { Button } from "../../components/ui/Button";
 import { Input } from "../../components/ui/Input";
 import { AuthContext } from "../../contexts/AuthContext";
 import { loginSchema, registerSchema, type LoginFormValues, type RegisterFormValues } from "../../features/auth/Schemas";
-import { cadastrarUsuario } from "../../services/Services";
+import { authService } from '../../services/Services';
 import { Toast } from "../../utils/toastConfig";
 
 export function AuthPage() {
@@ -37,6 +37,7 @@ export function AuthPage() {
 
   const watchedFotoUrl = watchSignup("foto");
   const watchedPassword = watchSignup("password") || "";
+  
   const passwordRules = [
     { regex: /.{6,}/, text: "Mínimo de 6 caracteres" },
     { regex: /[A-Z]/, text: "Pelo menos uma letra maiúscula" },
@@ -69,9 +70,8 @@ export function AuthPage() {
         foto: data.foto
       };
 
-      await cadastrarUsuario('/users', payloadCadastro, () => {
-      });
-
+      await authService.cadastrarUsuario(payloadCadastro);
+      
       Toast.dismiss(toastId);
       Toast.success("Cadastro realizado com sucesso! Faça seu login.");
       setIsLogin(true);

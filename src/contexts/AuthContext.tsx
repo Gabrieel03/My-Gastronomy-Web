@@ -48,17 +48,29 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     try {
       const response = await api.post("/auth/login", data);
-      const { token, user: userData } = response.data;
+      
+      const token = response.data.token || response.data.access_token;
+      const userData = response.data.user || null; // Corrigido de uscr para user
+
+      if (!token) {
+        throw new Error("O backend não retornou um token válido de autenticação.");
+      }
 
       localStorage.setItem("@MyGastronomy:token", token);
-      localStorage.setItem("@MyGastronomy:user", JSON.stringify(userData));
+      
+      if (userData) {
+        localStorage.setItem("@MyGastronomy:user", JSON.stringify(userData));
+        setUser(userData);
+      } else {
+        localStorage.removeItem("@MyGastronomy:user");
+        setUser(null);
+      }
 
       api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
-      setUser(userData);
     } catch (error) {
-      console.error("Erro no login", error);
-      throw error;
+      console.error("Erro no login:", error);
+      throw error; 
     } finally {
       setIsLoading(false);
     }
